@@ -1,0 +1,234 @@
+<!--HEAD-->
+<title>200 мс</title>
+<meta name="description" content="Интерактивная история: путь одного сообщения из Москвы в Нью-Йорк за 200 миллисекунд.">
+<meta name="theme-color" content="#06080C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2306080C'/%3E%3Ccircle cx='32' cy='32' r='7' fill='%23FFB23F'/%3E%3Ccircle cx='32' cy='32' r='15' fill='none' stroke='%23FFB23F' stroke-opacity='.55' stroke-width='2.5'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23FFB23F' stroke-opacity='.25' stroke-width='2.5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap">
+<style>/*CSS*/</style>
+<!--/HEAD-->
+<!--BODY-->
+<a class="skip" href="#setup" data-i18n="ui.skip">Перейти к началу истории</a>
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+<header class="top" id="top">
+  <a class="brand" href="#hero" aria-label="200 мс"><span>200</span><i data-i18n="ui.ms">мс</i></a>
+  <nav class="ctrl" aria-label="Управление историей">
+    <button class="btn btn--play" id="bPlay" type="button" aria-pressed="false">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path class="i-play" d="M4.5 3.2v9.6L12.6 8z"/><path class="i-pause" d="M4.2 3h2.6v10H4.2zM9.2 3h2.6v10H9.2z"/></svg>
+      <span data-i18n="ui.play">Смотреть</span>
+    </button>
+    <button class="btn btn--speed" id="bSpeed" type="button" hidden>1×</button>
+    <button class="btn" id="bSound" type="button" aria-pressed="false">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 6h2.6L8.6 3v10L5.1 10H2.5z"/><path class="i-wave" d="M10.6 5.4a3.6 3.6 0 0 1 0 5.2M12.4 3.6a6.2 6.2 0 0 1 0 8.8" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <span data-i18n="ui.sound">Звук</span>
+    </button>
+    <button class="btn" id="bNerd" type="button" aria-pressed="false">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 4 2 8l3.5 4M10.5 4 14 8l-3.5 4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span data-i18n="ui.nerd">Инженер</span>
+    </button>
+    <button class="btn btn--lang" id="bLang" type="button" aria-label="Switch to English">EN</button>
+  </nav>
+</header>
+
+<div class="stage" id="stage" aria-hidden="true">
+  <canvas id="cv"></canvas>
+  <div class="overlay" id="overlay"></div>
+  <div class="grain"></div>
+</div>
+
+<main id="story">
+  <section class="hero sheet sheet--night" id="hero" data-theme="night">
+    <div class="hero__inner">
+      <p class="kicker" data-i18n="hero.kicker">Интерактивная история</p>
+      <h1 class="hero__title" aria-label="200 мс">
+        <svg class="hero__svg" id="heroSvg" viewBox="0 0 1000 330" preserveAspectRatio="xMinYMid meet" aria-hidden="true">
+          <defs>
+            <filter id="heroGlow" x="-10%" y="-20%" width="120%" height="140%"><feGaussianBlur stdDeviation="5"/></filter>
+          </defs>
+          <text class="hero__base" x="0" y="262">200</text>
+          <text class="hero__race hero__race--blur" x="0" y="262" filter="url(#heroGlow)">200</text>
+          <text class="hero__race" x="0" y="262">200</text>
+          <text class="hero__race hero__race--b" x="0" y="262">200</text>
+          <text class="hero__unit" x="706" y="262" data-i18n="ui.ms">мс</text>
+        </svg>
+      </h1>
+      <p class="hero__dek" data-i18n="hero.dek">Что происходит между «Отправить» и&nbsp;«Доставлено». Путь одного сообщения из&nbsp;Москвы в&nbsp;Нью-Йорк — в&nbsp;замедлении до&nbsp;ста миллионов раз.</p>
+      <p class="hero__meta">
+        <span data-i18n="hero.meta">≈ 7 минут чтения · со звуком интереснее</span>
+        <span class="ping" id="ping" aria-live="off"></span>
+      </p>
+    </div>
+    <a class="hero__cue" href="#setup"><span data-i18n="hero.cue">Листай вниз</span><i aria-hidden="true"></i></a>
+  </section>
+
+  <section class="setup sheet sheet--paper" id="setup" data-theme="paper">
+    <div class="setup__grid">
+      <div class="setup__head">
+        <p class="kicker kicker--ink" data-i18n="setup.kicker">Вечер, 21:04 · Москва</p>
+        <h2 class="h2" data-i18n="setup.title">Прежде чем нажать «Отправить»</h2>
+        <p class="lede" data-i18n="setup.lede">Это Аня. Она живёт в&nbsp;Нью-Йорке, в&nbsp;7&nbsp;500 километрах отсюда, и&nbsp;у&nbsp;неё сейчас 14:04. Напиши ей что-нибудь: дальше мы проследим за&nbsp;каждым байтом твоего сообщения.</p>
+      </div>
+
+        <div class="guess" id="guess">
+          <label class="guess__q" for="guessRange" data-i18n="guess.q">Как думаешь, сколько времени сообщение будет лететь до&nbsp;телефона Ани?</label>
+          <div class="guess__row">
+            <input type="range" id="guessRange" min="0" max="1000" step="1" value="750" aria-describedby="guessOut">
+            <output id="guessOut" class="guess__out">1 с</output>
+          </div>
+          <div class="guess__scale" aria-hidden="true"><span>1 <i data-i18n="u.ms">мс</i></span><span>10 <i data-i18n="u.ms">мс</i></span><span>0,1 <i data-i18n="u.s">с</i></span><span>1 <i data-i18n="u.s">с</i></span><span>10 <i data-i18n="u.s">с</i></span></div>
+          <div class="guess__foot">
+            <button class="btn btn--ink" id="guessLock" type="button" data-i18n="guess.lock">Запомнить ответ</button>
+            <p class="guess__note" id="guessNote" aria-live="polite"></p>
+          </div>
+        </div>
+
+      <div class="phone" id="phone">
+        <div class="phone__frame">
+          <div class="phone__bar"><span>21:04</span><span class="phone__icons" aria-hidden="true"><i></i><i></i><i></i></span></div>
+          <div class="chat__head">
+            <div class="chat__ava" aria-hidden="true">А</div>
+            <div><p class="chat__name" data-i18n="chat.name">Аня</p><p class="chat__sub" data-i18n="chat.sub">Нью-Йорк · в сети</p></div>
+          </div>
+          <div class="chat__log" id="chatLog">
+            <p class="chat__day" data-i18n="chat.day">Сегодня</p>
+            <div class="bub bub--in"><span data-i18n="chat.in1">Как там Москва?</span><time>21:01</time></div>
+            <div class="bub bub--out bub--draft" id="draftBubble"><span id="draftText"></span><time>21:04</time></div>
+          </div>
+          <form class="chat__form" id="chatForm" autocomplete="off">
+            <label class="sr-only" for="msgInput" data-i18n="chat.label">Твоё сообщение Ане</label>
+            <input id="msgInput" name="msg" maxlength="64" spellcheck="false" enterkeyhint="send">
+            <button class="chat__send" id="sendBtn" type="submit" aria-label="Отправить">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h11M10 4.5 15.5 10 10 15.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+          <p class="chat__count"><span id="msgCount">0</span>/32</p>
+        </div>
+        <p class="phone__hint" data-i18n="chat.hint">Можно стереть и написать своё. Эмодзи тоже подойдут.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="scenes"></div>
+
+  <section class="finale sheet sheet--paper" id="finale" data-theme="paper">
+    <div class="wrap">
+      <p class="kicker kicker--ink" data-i18n="fin.kicker">≈200 мс · Итог</p>
+      <h2 class="h2 h2--xl" data-i18n="fin.title">Быстрее, чем ты моргнёшь</h2>
+      <p class="lede" data-i18n="fin.lede">Моргание длится 100–400 миллисекунд. За&nbsp;это время твоё сообщение пересекло полмира, а&nbsp;подтверждение вернулось обратно.</p>
+
+      <div class="panel replay" id="replay">
+        <div class="panel__hd">
+          <h3 class="h3" data-i18n="rep.title">Вся история в реальном времени</h3>
+          <div class="seg" role="group" aria-label="Скорость">
+            <button class="btn btn--ink" type="button" data-speed="1" data-i18n="rep.real">0,2 с · как есть</button>
+            <button class="btn btn--ink" type="button" data-speed="50" data-i18n="rep.slow">10 с · в 50 раз медленнее</button>
+          </div>
+        </div>
+        <canvas class="replay__cv" id="replayCv" height="360"></canvas>
+        <p class="replay__read" id="replayRead" aria-live="polite">0 мс</p>
+      </div>
+
+      <div class="duo">
+        <div class="panel react" id="react">
+          <h3 class="h3" data-i18n="rx.title">А ты быстрее сообщения?</h3>
+          <p class="muted" data-i18n="rx.text">Нажми на круг, дождись вспышки и жми как можно быстрее.</p>
+          <button class="react__pad" id="reactPad" type="button"><span id="reactLabel" data-i18n="rx.start">Начать</span></button>
+          <p class="react__res" id="reactRes" aria-live="polite"></p>
+        </div>
+        <div class="panel verdict" id="verdict">
+          <h3 class="h3" data-i18n="vd.title">Твоя догадка и реальность</h3>
+          <svg class="verdict__svg" id="verdictSvg" viewBox="0 0 520 190" role="img" aria-labelledby="verdictDesc"><desc id="verdictDesc">Сравнение догадки с реальным временем</desc></svg>
+          <p class="muted" id="verdictText"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sandbox sheet sheet--paper" id="sandbox" data-theme="paper">
+    <div class="wrap">
+      <p class="kicker kicker--ink" data-i18n="sb.kicker">Песочница</p>
+      <h2 class="h2" data-i18n="sb.title">А если написать не в Нью-Йорк?</h2>
+      <p class="lede" data-i18n="sb.lede">Выбери город или нажми на любую точку карты. Посчитаем, сколько свету нужно, чтобы добраться туда из Москвы по стеклу.</p>
+      <div class="chips" id="chips" role="group" aria-label="Города"></div>
+      <div class="sandbox__map">
+        <canvas id="worldCv" aria-label="Карта мира: нажми на точку, чтобы посчитать задержку" role="img"></canvas>
+      </div>
+      <dl class="stats" id="sbStats"></dl>
+      <p class="muted small" data-i18n="sb.note">Минимум — это свет в стекле по кратчайшей дуге. Реальные кабели идут в обход, а пакеты ждут в очередях, поэтому в жизни выходит примерно в 1,5–2 раза дольше.</p>
+    </div>
+  </section>
+
+  <section class="epilogue sheet sheet--night" id="epilogue" data-theme="night">
+    <div class="wrap">
+      <div class="counter">
+        <p class="kicker" data-i18n="ep.kicker">Прямо сейчас</p>
+        <p class="counter__num" id="counterNum">0</p>
+        <p class="counter__cap" data-i18n="ep.cap">сообщений отправлено в одном только WhatsApp с момента, как открылась эта страница*</p>
+        <p class="small muted" data-i18n="ep.note">* Оценка: 100 млрд сообщений в день по данным WhatsApp (2020), то есть около 1,16 млн в секунду.</p>
+      </div>
+      <div class="post">
+        <canvas class="post__cv" id="postCv" width="1080" height="1350"></canvas>
+        <div class="post__side">
+          <h3 class="h3" data-i18n="pc.title">Открытка на память</h3>
+          <p class="muted" data-i18n="pc.text">Маршрут твоего сообщения, его размер и твои результаты — на одной картинке.</p>
+          <div class="post__btns">
+            <button class="btn btn--signal" id="postSave" type="button" data-i18n="pc.save">Сохранить открытку</button>
+            <button class="btn" id="shareBtn" type="button" data-i18n="pc.share">Скопировать ссылку</button>
+          </div>
+          <p class="small muted" id="postNote" aria-live="polite"></p>
+        </div>
+      </div>
+      <div class="sources">
+        <h3 class="h3" data-i18n="src.title">Источники и допущения</h3>
+        <ul id="sourceList"></ul>
+        <p class="small muted" data-i18n="src.model">Время по сценам — модель: скорость света в волокне, реальные расстояния и типичные задержки оборудования. Настоящий пакет каждый раз выбирает путь сам.</p>
+      </div>
+      <footer class="foot">
+        <p><span class="foot__mark">200 <i data-i18n="ui.ms">мс</i></span> <span data-i18n="foot.text">концепт-проект, 2026. Шрифты Source Serif 4 и Source Code Pro, карты Natural Earth.</span></p>
+        <p class="foot__keys" data-i18n="foot.keys">Клавиши: ← → главы · P смотреть · M звук · E инженер · L язык · ? помощь</p>
+      </footer>
+    </div>
+  </section>
+</main>
+
+<nav class="hud" id="hud" aria-label="Шкала времени истории">
+  <button class="hud__time" id="hudTime" type="button" aria-haspopup="true" aria-controls="chapters">
+    <span class="hud__lbl">t</span><span class="hud__t" id="hudT">0,000 000</span><span class="hud__u" data-i18n="u.ms">мс</span>
+    <span class="hud__x" id="hudX"></span>
+  </button>
+  <div class="hud__track" id="track" role="slider" tabindex="0" aria-label="Перемотка истории" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+    <div class="hud__rail"><i id="trackFill"></i></div>
+    <div class="hud__ticks" id="trackTicks"></div>
+    <div class="hud__head" id="trackHead"></div>
+  </div>
+  <div class="hud__bubble" id="hudBubble"><span class="hud__msg" id="hudMsg"></span><span class="hud__st" id="hudSt" aria-live="polite"></span></div>
+  <button class="hud__link" id="hudLink" type="button" aria-label="Скопировать ссылку на этот момент">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6.6 9.4a2.6 2.6 0 0 0 3.7 0l2.4-2.4a2.6 2.6 0 0 0-3.7-3.7l-.9.9M9.4 6.6a2.6 2.6 0 0 0-3.7 0L3.3 9a2.6 2.6 0 0 0 3.7 3.7l.9-.9" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+  </button>
+</nav>
+
+<div class="chapters" id="chapters" hidden>
+  <div class="chapters__box" role="dialog" aria-modal="false" aria-labelledby="chaptersTitle">
+    <p class="kicker" id="chaptersTitle" data-i18n="ui.chapters">Главы</p>
+    <ol id="chapterList"></ol>
+  </div>
+</div>
+
+<div class="help" id="help" hidden>
+  <div class="help__box" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <p class="kicker" id="helpTitle" data-i18n="help.title">Горячие клавиши</p>
+    <dl class="help__list" id="helpList"></dl>
+    <button class="btn" id="helpClose" type="button" data-i18n="help.close">Закрыть</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<div class="cursor" id="cursor" aria-hidden="true"><i></i></div>
+<!--/BODY-->
+<!--SCRIPTS-->
+<script src="https://cdn.jsdelivr.net/npm/d3-array@3.2.4/dist/d3-array.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/dist/d3-geo.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<!--/SCRIPTS-->

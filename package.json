@@ -1,0 +1,16 @@
+{
+  "name": "200ms",
+  "private": true,
+  "version": "1.0.0",
+  "description": "200 ms: a scrollytelling story of one message crossing half the planet",
+  "type": "module",
+  "scripts": {
+    "map": "node tools/build-map.mjs",
+    "build": "node tools/build.mjs"
+  },
+  "devDependencies": {
+    "d3-geo": "3.1.1",
+    "topojson-client": "3.1.0",
+    "world-atlas": "2.0.2"
+  }
+}
